@@ -17,7 +17,7 @@ class State {
         int gridHeight;
         int gridWidth;
         bool gameRunning;
-        string actions = "uldr";
+        string actions;
 
         //Constructor to create a state from a string state
         State(string filePath) {
@@ -63,6 +63,7 @@ class State {
             }
             gridHeight = curRow;
             gridWidth = curCol-1;
+            actions = "uldr";
         }
 
         int getDimension(){
@@ -76,16 +77,6 @@ class State {
         void reset(){
             gameRunning = true;
             curPos = startPos;
-        }
-
-        array<int,2> valToPos(int val){
-            int row = (val - 1) / gridWidth + 1;
-            int col = (val - 1) % gridWidth + 1;
-            return {col,row};
-        }
-
-        int posToVal(int col, int row){
-            return (row - 1) * gridWidth + col;
         }
 
         int getVal(){

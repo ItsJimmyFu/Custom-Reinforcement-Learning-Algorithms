@@ -1,5 +1,5 @@
 #include <iostream>  // Include the iostream library for input/output
-#include "Environments/Frozen_Lake/frozenLake.cpp"
+#include "Frozen_Lake/frozenLake.cpp"
 #include <cmath> 
 #include <random>
 #include <string>
@@ -11,8 +11,13 @@ vector<char> evaluateAgent(State state, double** qTable, int maxSteps);
 
 int main() 
 {   
-    //Load environment 
-    string environmentPath = "Environments/Frozen_lake/easy.txt";
+    //Get the map number from the user 
+    string mapNumber;
+    std::cout << "Enter the map number (1-3): ";
+    std::cin >> mapNumber;  
+
+    //Load Frozen Lake environment
+    string environmentPath = "Frozen_Lake/maps/map" + mapNumber+ ".txt";
     State state(environmentPath);
     int qTableRows = state.getDimension();
     int qTableCols = state.getActionSpace();
@@ -181,7 +186,10 @@ float gamma, float maxEpsilon, float minEpsilon, float decayRate, unsigned int s
 
             int actionIndex = state.actions.find(action);
 
+            //Update qTable value based on the expected value of next state
             qTable[stateIndex][actionIndex] = qTable[stateIndex][actionIndex] + learningRate * (reward + gamma * newStateMaxVal - qTable[stateIndex][actionIndex]);
+            
+            //Stop if the game is finished
             if(!state.gameRunning) {
                 break;
             }
